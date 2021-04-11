@@ -15,7 +15,7 @@ jobs:
     - uses: c-hive/gha-yarn-cache@v1
     - name: Install dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile
+      run: yarn install --frozen-lockfile --prefer-offline
     - run: yarn build
     - run: yarn lint:ci
     # FIXME temporary disabled tests
