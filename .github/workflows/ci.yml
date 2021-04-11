@@ -11,43 +11,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    # cache dependencies
+    - uses: c-hive/gha-yarn-cache@v1
     - run: yarn install
     - run: yarn build
-      env:
-        CI: true
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: yarn install
-    - run: yarn lint
-      env:
-        CI: true
-  unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: yarn install
+    - run: yarn lint:ci
     - run: yarn test:unit:ci
-      env:
-        CI: true
-  unit-tests-coverage:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: yarn install
     - run: yarn test:unit:coverage:ci
-      env:
-        CI: true

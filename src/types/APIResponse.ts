@@ -1,17 +1,19 @@
 export interface APISegment {
-  type: string,
+  type: string
   stats: {
-    kills: { value: number },
-    kdRatio: { value: number },
+    kills: { value: number }
+    kdRatio: { value: number }
   }
 }
 
+export enum SegmentType {
+  OVERVIEW = 'overview'
+}
+
 export interface APIResponse {
-  data: {
-    platformInfo: {
-      platformUserIdentifier: string,
-      platformSlug: string,
-    },
-    segments: APISegment[],
+  platformInfo: {
+    platformUserIdentifier: string
+    platformSlug: string
   }
+  segments: APISegment[]
 }

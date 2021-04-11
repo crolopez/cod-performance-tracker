@@ -9,7 +9,6 @@ module.exports = {
 
   moduleFileExtensions: [
     'ts',
-    'tsx',
     'js',
   ],
 
@@ -19,13 +18,13 @@ module.exports = {
   },
 
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(ts)$': 'ts-jest',
   },
 
   // Coverage
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    'src/**/**/*.{ts,tsx}',
+    'src/**/*.{ts}',
+    'src/**/**/*.{ts}',
     '!src/index.ts',
   ],
   coverageThreshold: {

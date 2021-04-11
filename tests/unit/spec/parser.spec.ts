@@ -1,12 +1,10 @@
-import { parseRawUserData } from '../../../src/modules/parser'
-import { FIRST_RESPONSE } from '../data/trackerAPIResponse.template'
+import { getUserStatsFromApiResponse } from '../../../src/modules/parser'
+import { getZelopecResponse } from '../data/trackerAPIResponse.template'
 import { USER_STATS } from '../data/parser.template'
-import { UserStats } from '../../../src/types/UserStats'
 
 describe('parser module', () => {
-
-  test('#parseRawUserData', async () => {
-    const result: UserStats = parseRawUserData(FIRST_RESPONSE)
+  it('should parse the stats from the api response', () => {
+    const result = getUserStatsFromApiResponse(getZelopecResponse())
 
     expect(result).toStrictEqual(USER_STATS)
   })

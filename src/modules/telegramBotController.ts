@@ -1,3 +1,5 @@
+/*
+// FIXME: REMOVE THIS FILE, EXPECTED TO USE WEBHOOK INSTEAD
 import TeleBot from 'telebot'
 import CONFIG from './config'
 import { getDetailedReportInHTMLFormat, getReportInHTMLFormat } from './trackerController'
@@ -36,3 +38,4 @@ function initBot(): void {
 }
 
 export { initBot }
+ */
