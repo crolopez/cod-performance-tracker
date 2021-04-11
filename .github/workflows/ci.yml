@@ -13,7 +13,7 @@ jobs:
         node-version: 12.x
     # cache dependencies
     - uses: c-hive/gha-yarn-cache@v1
-    - run: yarn install
+    - run: yarn install --frozen-lockfile
     - run: yarn build
     - run: yarn lint:ci
     - run: yarn test:unit:ci
