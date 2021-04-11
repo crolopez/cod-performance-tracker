@@ -1,3 +1,5 @@
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/crolopez/cod-performance-tracker)
+
 # COD PERFORMANCE TRACKER
 
 Telegram bot to report on your and your friends' performance in Call of Duty Cold War.
