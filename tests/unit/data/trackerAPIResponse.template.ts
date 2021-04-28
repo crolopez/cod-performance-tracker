@@ -1,4 +1,4 @@
-export const FIRST_RESPONSE = {
+export const getFirstUserResponse = (): any => ({
   data: {
     platformInfo: {
       platformSlug: 'battlenet',
@@ -20,9 +20,9 @@ export const FIRST_RESPONSE = {
       },
     ],
   },
-}
+})
 
-export const SECOND_RESPONSE = {
+export const getSecondUserResponse = (): any => ({
   data: {
     platformInfo: {
       platformSlug: 'battlenet',
@@ -44,4 +44,4 @@ export const SECOND_RESPONSE = {
       },
     ],
   },
-}
+})

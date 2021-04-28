@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { HttpClientRequestParameters } from './HttpClientRequestParameters'
+import { HttpClientRequestParameters } from '../types/HttpClientRequestParameters'
 
 export default class HttpClient {
   static buildHeaders (token: string | undefined): { headers: { RequestVerificationToken?: string } } {

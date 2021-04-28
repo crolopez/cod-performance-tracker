@@ -1,5 +1,5 @@
 import nock from 'nock'
-import HttpClient from '../../../src/modules/HttpClient/HttpClient'
+import HttpClient from '../../../src/modules/HttpClient'
 
 describe('Class HttpClient', () => {
   beforeEach(() => {

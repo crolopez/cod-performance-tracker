@@ -1,5 +1,5 @@
 import TeleBot from 'telebot'
-import CONFIG from './config'
+import { getConfig } from './config'
 import { getDetailedReportInHTMLFormat, getReportInHTMLFormat } from './trackerController'
 
 let bot: TeleBot
@@ -19,18 +19,18 @@ function registerBotEvents(): void {
   })
 
   bot.on('/detailed_report', async (msg: any) => {
-    const report: string = await getDetailedReportInHTMLFormat(CONFIG.USERS_TO_REPORT)
+    const report: string = await getDetailedReportInHTMLFormat(getConfig().USERS_TO_REPORT)
     send(msg.from.id, report)
   })
 
   bot.on('/report', async (msg: any) => {
-    const report: string = await getReportInHTMLFormat(CONFIG.USERS_TO_REPORT)
+    const report: string = await getReportInHTMLFormat(getConfig().USERS_TO_REPORT)
     send(msg.from.id, report)
   })
 }
 
 function initBot(): void {
-  bot = new TeleBot(CONFIG.TELEGRAM_BOT_KEY)
+  bot = new TeleBot(getConfig().TELEGRAM_BOT_KEY)
   registerBotEvents()
   bot.start()
 }

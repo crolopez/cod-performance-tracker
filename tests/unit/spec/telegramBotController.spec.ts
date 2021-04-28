@@ -6,7 +6,7 @@ import telebot from '../__mocks__/telebot'
 
 jest.mock('../../../src/modules/config', () => {
   return {
-    TELEGRAM_BOT_KEY: 'token',
+    getConfig: jest.fn().mockReturnValue({TELEGRAM_BOT_KEY: 'token'}),
   }
 })
 

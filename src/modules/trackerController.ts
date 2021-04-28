@@ -1,5 +1,5 @@
-import HttpClient from './HttpClient/HttpClient'
-import { parseRawUserData } from './parser'
+import HttpClient from './HttpClient'
+import { getUserStatsFromApiResponse } from './parser'
 import { UserStats } from 'src/types/UserStats'
 import { APIResponse } from 'src/types/APIResponse'
 
@@ -8,9 +8,9 @@ const TRACKER_API = 'https://api.tracker.gg/api/v2/cold-war/standard/profile/bat
 async function requestUserData(user: string): Promise<APIResponse> {
   const userUrl = `${TRACKER_API}${user}`.replace('#', '%23')
   console.log(`Sending request to ${userUrl}`)
-  const time: number = new Date().getTime()
+  const time = new Date().getTime()
 
-  const response: APIResponse = await HttpClient.get({
+  const { data } = await HttpClient.get({
     url: userUrl,
     headers: {
       'User-Agent': 'cod-performance-tracker',
@@ -21,12 +21,12 @@ async function requestUserData(user: string): Promise<APIResponse> {
   })
 
   console.log(`Request received after ${new Date().getTime() - time}ms`)
-  return response
+  return data
 }
 
 async function getUserStats(user: string): Promise<UserStats> {
-  const rawUserData: APIResponse = await requestUserData(user)
-  return parseRawUserData(rawUserData)
+  const rawUserData = await requestUserData(user)
+  return getUserStatsFromApiResponse(rawUserData)
 }
 
 function getHTMLFormatMessageFromUserStats(userStats: UserStats, all: boolean): string {
@@ -40,7 +40,7 @@ function getHTMLFormatMessageFromUserStats(userStats: UserStats, all: boolean): 
 
 async function getUserStatsMessage(user: string, all: boolean): Promise<string> {
   try {
-    const userStats: UserStats = await getUserStats(user)
+    const userStats = await getUserStats(user)
     return getHTMLFormatMessageFromUserStats(userStats, all)
   } catch (err) {
     console.log(`Error: ${err}`)
@@ -48,21 +48,27 @@ async function getUserStatsMessage(user: string, all: boolean): Promise<string> 
   }
 }
 
+function getPromiseValue(promise: PromiseSettledResult<string>): string {
+  return promise.status === 'fulfilled' ? promise.value : promise.reason
+}
+
 async function getDetailedReportInHTMLFormat(users: string[]): Promise<string> {
   let report = '<b>///////////////////// DETAILED REPORT /////////////////////</b>\n'
-  for (const user of users) {
-    report += '\n'
-    report += await getUserStatsMessage(user, true)
-  }
+  const userReports = Array.from(users, user => getUserStatsMessage(user, true))
+
+  await Promise.allSettled(userReports)
+    .then(results => results.forEach(result => report += `\n${getPromiseValue(result)}`))
+
   return report
 }
 
 async function getReportInHTMLFormat(users: string[]): Promise<string> {
   let report = '<b>///////////////////// REPORT /////////////////////</b>\n'
-  for (const user of users) {
-    report += '\n'
-    report += await getUserStatsMessage(user, false)
-  }
+  const userReports = Array.from(users, user => getUserStatsMessage(user, false))
+
+  await Promise.allSettled(userReports)
+    .then(results => results.forEach(result => report += `\n${getPromiseValue(result)}`))
+
   return report
 }
 

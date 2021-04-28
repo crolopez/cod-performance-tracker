@@ -2,7 +2,7 @@ import nock from 'nock'
 import { getDetailedReportInHTMLFormat, getReportInHTMLFormat } from '../../../src/modules/trackerController'
 import { REPORT_HEADER, DETAILED_REPORT_HEADER, HTML_REPORT, DETAILED_HTML_REPORT,
   ERROR_HTML_REPORT, DETAILED_ERROR_HTML_REPORT } from '../data/trackerController.template'
-import { FIRST_RESPONSE, SECOND_RESPONSE } from '../data/trackerAPIResponse.template'
+import { getFirstUserResponse , getSecondUserResponse } from '../data/trackerAPIResponse.template'
 
 function mockTrackerAPI(user: string, response: any) {
   nock('https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet')
@@ -36,8 +36,8 @@ describe('trackerController module', () => {
   })
 
   test('#getDetailedReportInHTMLFormat (with several users)', async () => {
-    mockTrackerAPI(testUsers[0], FIRST_RESPONSE)
-    mockTrackerAPI(testUsers[1], SECOND_RESPONSE)
+    mockTrackerAPI(testUsers[0], getFirstUserResponse())
+    mockTrackerAPI(testUsers[1], getSecondUserResponse())
 
     const result = await getDetailedReportInHTMLFormat(testUsers)
 
@@ -45,8 +45,8 @@ describe('trackerController module', () => {
   })
 
   test('#getReportInHTMLFormat (with several users)', async () => {
-    mockTrackerAPI(testUsers[0], FIRST_RESPONSE)
-    mockTrackerAPI(testUsers[1], SECOND_RESPONSE)
+    mockTrackerAPI(testUsers[0], getFirstUserResponse())
+    mockTrackerAPI(testUsers[1], getSecondUserResponse())
 
     const result = await getReportInHTMLFormat(testUsers)
 
