@@ -20,16 +20,18 @@ To configure the tracker you have edit the `.env` file, replacing the default va
 
 | Field | Description |
 |-|-|
-| TELEGRAM_BOT_KEY | API key from your Telegram bot |
+| TELEGRAM_BOT_TOKEN | API token from your Telegram bot |
 | REPORT_EMPTY_DAYS | If the non played days will be notified `(not implemented)` |
 | USERS_TO_REPORT | List of users to be analysed in the following format: `User1#111,User2#222` |
+| ENDPOINT_PORT | Endpoint port to receive webhook requests from Telegram |
 
 Example:
 
 ``` bash
-TELEGRAM_BOT_KEY=129238594:AAF5Safasfj899824781l8asdaszZ3
+TELEGRAM_BOT_TOKEN=129238594:AAF5Safasfj899824781l8asdaszZ3
 REPORT_EMPTY_DAYS=true
 USERS_TO_REPORT=Zelopec#232548,SneezyDwarf#2155284
+ENDPOINT_PORT=80
 ```
 
 ## Execute periodic reports

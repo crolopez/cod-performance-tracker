@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { getDetailedReportInHTMLFormat, getReportInHTMLFormat } from '../../../src/modules/trackerController'
+import { getDetailedReport, getReport } from '../../../src/modules/trackerController'
 import { REPORT_HEADER, DETAILED_REPORT_HEADER, HTML_REPORT, DETAILED_HTML_REPORT,
   ERROR_HTML_REPORT, DETAILED_ERROR_HTML_REPORT } from '../data/trackerController.template'
 import { getFirstUserResponse , getSecondUserResponse } from '../data/trackerAPIResponse.template'
@@ -23,48 +23,48 @@ describe('trackerController module', () => {
     nock.disableNetConnect()
   })
 
-  test('#getDetailedReportInHTMLFormat (without users)', async () => {
-    const result = await getDetailedReportInHTMLFormat([])
+  test('#getDetailedReport (without users)', async () => {
+    const result = await getDetailedReport([])
 
     expect(result).toBe(DETAILED_REPORT_HEADER)
   })
 
-  test('#getReportInHTMLFormat (without users)', async () => {
-    const result = await getReportInHTMLFormat([])
+  test('#getReport (without users)', async () => {
+    const result = await getReport([])
 
     expect(result).toBe(REPORT_HEADER)
   })
 
-  test('#getDetailedReportInHTMLFormat (with several users)', async () => {
+  test('#getDetailedReport (with several users)', async () => {
     mockTrackerAPI(testUsers[0], getFirstUserResponse())
     mockTrackerAPI(testUsers[1], getSecondUserResponse())
 
-    const result = await getDetailedReportInHTMLFormat(testUsers)
+    const result = await getDetailedReport(testUsers)
 
     expect(result).toBe(DETAILED_HTML_REPORT)
   })
 
-  test('#getReportInHTMLFormat (with several users)', async () => {
+  test('#getReport (with several users)', async () => {
     mockTrackerAPI(testUsers[0], getFirstUserResponse())
     mockTrackerAPI(testUsers[1], getSecondUserResponse())
 
-    const result = await getReportInHTMLFormat(testUsers)
+    const result = await getReport(testUsers)
 
     expect(result).toBe(HTML_REPORT)
   })
 
-  test('#getDetailedReportInHTMLFormat (with an invalid user)', async () => {
+  test('#getDetailedReport (with an invalid user)', async () => {
     mockTrackerAPIWithError(testUsers[0])
 
-    const result = await getDetailedReportInHTMLFormat([testUsers[0]])
+    const result = await getDetailedReport([testUsers[0]])
 
     expect(result).toBe(DETAILED_ERROR_HTML_REPORT)
   })
 
-  test('#getReportInHTMLFormat (with an invalid user)', async () => {
+  test('#getReport (with an invalid user)', async () => {
     mockTrackerAPIWithError(testUsers[0])
 
-    const result = await getReportInHTMLFormat([testUsers[0]])
+    const result = await getReport([testUsers[0]])
 
     expect(result).toBe(ERROR_HTML_REPORT)
   })

@@ -1,27 +1,24 @@
-import HttpClient from './HttpClient'
+import axios from 'axios'
 import { getUserStatsFromApiResponse } from './parser'
 import { UserStats } from 'src/types/UserStats'
 import { APIResponse } from 'src/types/APIResponse'
 
-const TRACKER_API = 'https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet/'
+const trackerAPI = 'https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet/'
+const requestHeaders = {
+  headers: {
+    'User-Agent': 'cod-performance-tracker',
+    'Accept': 'application/json',
+    'Accept-Encoding': 'identity',
+    'Connection': 'Keep-Alive',
+  },
+}
 
 async function requestUserData(user: string): Promise<APIResponse> {
-  const userUrl = `${TRACKER_API}${user}`.replace('#', '%23')
-  console.log(`Sending request to ${userUrl}`)
-  const time = new Date().getTime()
+  const userUrl = `${trackerAPI}${user}`.replace('#', '%23')
 
-  const { data } = await HttpClient.get({
-    url: userUrl,
-    headers: {
-      'User-Agent': 'cod-performance-tracker',
-      'Accept': 'application/json',
-      'Accept-Encoding': 'identity',
-      'Connection': 'Keep-Alive',
-    },
-  })
+  const { data } = await axios.get(userUrl, requestHeaders)
 
-  console.log(`Request received after ${new Date().getTime() - time}ms`)
-  return data
+  return data.data
 }
 
 async function getUserStats(user: string): Promise<UserStats> {
@@ -30,10 +27,10 @@ async function getUserStats(user: string): Promise<UserStats> {
 }
 
 function getHTMLFormatMessageFromUserStats(userStats: UserStats, all: boolean): string {
-  let message = `<b>User: </b>${userStats.userId}\n`
-  if (all) message += `<b>Platform: </b>${userStats.platform}\n`
-  message += `<b>Global KD: </b>${userStats.globalKd}\n`
-  if (all) message += `<b>Kills: </b>${userStats.kills}\n`
+  let message = `*User: *${userStats.userId}\n`
+  if (all) message += `*Platform: *${userStats.platform}\n`
+  message += `*Global KD: *${userStats.globalKd}\n`
+  if (all) message += `*Kills: *${userStats.kills}\n`
 
   return message
 }
@@ -52,8 +49,8 @@ function getPromiseValue(promise: PromiseSettledResult<string>): string {
   return promise.status === 'fulfilled' ? promise.value : promise.reason
 }
 
-async function getDetailedReportInHTMLFormat(users: string[]): Promise<string> {
-  let report = '<b>///////////////////// DETAILED REPORT /////////////////////</b>\n'
+async function getDetailedReport(users: string[]): Promise<string> {
+  let report = '*///////////////////// DETAILED REPORT /////////////////////*\n'
   const userReports = Array.from(users, user => getUserStatsMessage(user, true))
 
   await Promise.allSettled(userReports)
@@ -62,8 +59,8 @@ async function getDetailedReportInHTMLFormat(users: string[]): Promise<string> {
   return report
 }
 
-async function getReportInHTMLFormat(users: string[]): Promise<string> {
-  let report = '<b>///////////////////// REPORT /////////////////////</b>\n'
+async function getReport(users: string[]): Promise<string> {
+  let report = '*///////////////////// REPORT /////////////////////*\n'
   const userReports = Array.from(users, user => getUserStatsMessage(user, false))
 
   await Promise.allSettled(userReports)
@@ -72,4 +69,4 @@ async function getReportInHTMLFormat(users: string[]): Promise<string> {
   return report
 }
 
-export { getDetailedReportInHTMLFormat, getReportInHTMLFormat }
+export { getDetailedReport, getReport }
