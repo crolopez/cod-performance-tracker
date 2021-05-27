@@ -7,13 +7,18 @@
     "type": "git",
     "url": "https://github.com/crolopez/cod-performance-tracker/"
   },
+  "main": "dist/handler.js",
   "author": "Cristóbal López Peñalver",
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
     "lint": "eslint --fix --ext .js,.ts src tests",
     "lint:ci": "eslint --ext .js,.ts src tests",
     "build": "rimraf ./dist && tsc",
+    "start:local": "serverless offline",
     "start": "node dist/index.js",
+    "deploy": "serverless deploy",
+    "deploy:production": "yarn deploy --stage production",
+    "remove": "serverless remove",
     "test:unit": "jest",
     "test:unit:coverage": "yarn test:unit --coverage",
     "test:unit:ci": "yarn test:unit --ci --runInBand",
@@ -24,17 +29,23 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.77",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.22",
     "@types/nock": "^11.1.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
+    "aws-lambda": "^1.0.6",
     "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.24.0",
     "jest": "^26.6.3",
     "nock": "^13.0.11",
     "nodemon": "^2.0.6",
+    "serverless": "^2.46.0",
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-offline": "^7.0.0",
+    "telegram-typings": "^5.0.0",
     "ts-jest": "^26.5.4",
     "typescript": "^4.2.4"
   }
