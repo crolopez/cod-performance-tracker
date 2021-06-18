@@ -1,12 +1,12 @@
-import { CommandHandler } from 'src/types/CommandHandler'
-import { CommandResponse } from 'src/types/CommandResponse'
-import { getReport } from '../trackerController'
-import { sendMessage } from '../telegramBotController'
-import { getConfig } from '../config'
+import { Command } from '../../types/Command'
+import { CommandResponse } from '../../types/CommandResponse'
+import { getReport } from '../trackerController/trackerController'
+import { sendMessage } from '../telegramController'
+import { getConfig } from '../../utils/config'
 
 const users = getConfig().USERS_TO_REPORT
 
-const sendReport = async (chatId: string): Promise<CommandResponse> => {
+const sendReport = async (chatId: number): Promise<CommandResponse> => {
   const report = await getReport(users)
   const result = await sendMessage(chatId, report)
   return {
@@ -15,7 +15,7 @@ const sendReport = async (chatId: string): Promise<CommandResponse> => {
   }
 }
 
-class ReportCommand implements CommandHandler {
+class ReportCommand implements Command {
   command = 'report'
   handler = sendReport
 }

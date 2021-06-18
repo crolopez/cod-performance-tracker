@@ -1,4 +1,4 @@
-import { getUserStatsFromApiResponse } from '../../../src/modules/parser'
+import { getUserStatsFromApiResponse } from '../../../src/modules/trackerController/parser'
 import { getFirstUserResponse } from '../data/trackerAPIResponse.template'
 import { USER_STATS } from '../data/parser.template'
 import { UserStats } from '../../../src/types/UserStats'

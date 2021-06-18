@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getUserStatsFromApiResponse } from './parser'
-import { UserStats } from 'src/types/UserStats'
-import { APIResponse } from 'src/types/APIResponse'
+import { UserStats } from '../../types/UserStats'
+import { APIResponse } from '../../types/APIResponse'
 
 const trackerAPI = 'https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet/'
 const requestHeaders = {

@@ -1,37 +1,33 @@
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/crolopez/cod-performance-tracker)
-
 # COD PERFORMANCE TRACKER
 
 Telegram bot to report on your and your friends' performance in Call of Duty Cold War.
 
 ## How to deploy
 
-Just execute:
+The project has been prepared to run in a serverless environment. You can get an idea of what you need to deploy it by checking `config.yml` and `serverless.yml` files.
+
+However, if you want to deploy it locally, or in a non-serverless environment, just run the following commands:
 
 ``` bash
-yarn install # First time only
-yarn build # First time only
-yarn start
+yarn install
+yarn build
+yarn start:local
 ```
 
 ## Configure
 
-To configure the tracker you have edit the `.env` file, replacing the default values by the desired ones.
+To configure the tracker you have to create a `.env` file and add the following values:
 
 | Field | Description |
 |-|-|
 | TELEGRAM_BOT_TOKEN | API token from your Telegram bot |
-| REPORT_EMPTY_DAYS | If the non played days will be notified `(not implemented)` |
 | USERS_TO_REPORT | List of users to be analysed in the following format: `User1#111,User2#222` |
-| ENDPOINT_PORT | Endpoint port to receive webhook requests from Telegram |
 
 Example:
 
 ``` bash
 TELEGRAM_BOT_TOKEN=129238594:AAF5Safasfj899824781l8asdaszZ3
-REPORT_EMPTY_DAYS=true
 USERS_TO_REPORT=Zelopec#232548,SneezyDwarf#2155284
-ENDPOINT_PORT=80
 ```
 
 ## Execute periodic reports

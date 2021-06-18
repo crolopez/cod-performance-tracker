@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { getDetailedReport, getReport } from '../../../src/modules/trackerController'
+import { getDetailedReport, getReport } from '../../../src/modules/trackerController/trackerController'
 import { REPORT_HEADER, DETAILED_REPORT_HEADER, HTML_REPORT, DETAILED_HTML_REPORT,
   ERROR_HTML_REPORT, DETAILED_ERROR_HTML_REPORT } from '../data/trackerController.template'
 import { getFirstUserResponse , getSecondUserResponse } from '../data/trackerAPIResponse.template'

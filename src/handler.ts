@@ -1,36 +1,20 @@
-// import express from 'express'
-// import type { Message } from 'telegram-typings'
 import type { APIGatewayProxyHandler } from 'aws-lambda/trigger/api-gateway-proxy'
-// import { commandDispatcher } from './modules/commandDispatcher'
-// import { getConfig } from './modules/config'
-
-/*
-const port = getConfig().ENDPOINT_PORT
-
-const app = express()
-
-app.use(express.json())
-
-app.post('/', async (req, res) => {
-  try {
-    const response = await commandDispatcher(req.body)
-    return res.status(200).json(response)
-  } catch (error) {
-    return res.status(500).json({
-      reason: error.message,
-    })
-  }
-})
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
-*/
+import { Message } from 'telegram-typings'
+import { commandDispatcher } from './modules/commands/commandDispatcher'
 
 const handle: APIGatewayProxyHandler = async (event: any) => {
-  return {
-    body: 'ok',
-    statusCode: 200,
+  try {
+    const { message } = JSON.parse(event.body)
+    const response = await commandDispatcher(message as Message)
+    return {
+      body: JSON.stringify(response),
+      statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      body: JSON.stringify({ reason: error.message }),
+      statusCode: 500,
+    }
   }
 }
 

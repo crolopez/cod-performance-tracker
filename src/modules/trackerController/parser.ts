@@ -1,5 +1,5 @@
-import { UserStats } from '../types/UserStats'
-import { APIResponse, APISegment, SegmentType } from '../types/APIResponse'
+import { UserStats } from '../../types/UserStats'
+import { APIResponse, APISegment, SegmentType } from '../../types/APIResponse'
 
 function getGlobalKd(overviewSegments: APISegment[]): number {
   return overviewSegments[0].stats.kdRatio.value

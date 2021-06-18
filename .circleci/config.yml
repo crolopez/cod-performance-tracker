@@ -55,7 +55,7 @@ jobs:
             URL="$(yarn serverless info --stage production --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g)"
             echo "Webhook: $URL"
             curl --request POST \
-            --url "https://api.telegram.org/bot$TELEGRAM_BOT_KEY/setWebhook" \
+            --url "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook" \
             --header "content-type: application/json" \
             --data "{\"url\": \"$URL/cod-performance-tracker\"}"
 

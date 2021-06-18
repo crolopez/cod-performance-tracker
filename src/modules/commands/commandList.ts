@@ -1,8 +1,8 @@
-import { CommandHandler } from 'src/types/CommandHandler'
+import { Command } from '../../types/Command'
 import { reportCommand } from './reportCommand'
 import { detailedReportCommand } from './detailedReportCommand'
 
-export const getCommandsHandlers = (): CommandHandler[] => ([
+export const getCommandList = (): Command[] => ([
   reportCommand,
   detailedReportCommand,
 ])
