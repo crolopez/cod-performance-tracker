@@ -21,7 +21,7 @@ package:
 functions:
   cptf:
     handler: dist/handler.handle
-    memorySize: 128
+    memorySize: 256
     package:
       include:
         - dist

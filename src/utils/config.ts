@@ -1,7 +1,3 @@
-import { config } from 'dotenv'
-
-config()
-
 export function getConfig(): any {
   if (!process.env.TELEGRAM_BOT_TOKEN) {
     throw new Error('TELEGRAM_BOT_TOKEN is undefined')

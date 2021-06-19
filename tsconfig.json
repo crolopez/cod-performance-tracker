@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
-    "target": "es6",
+    "incremental": true,
+    "target": "es2017",
     "module": "commonjs",
-    "strict": true,
+    "removeComments": true,
     "resolveJsonModule": true,
-    "importHelpers": true,
+    "allowJs": false,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -14,17 +14,15 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": false,
-    "baseUrl": ".",
+    "sourceMap": true,
     "types": [
-      "jest"
+      "jest",
+      "node",
+      "aws-lambda"
     ],
-    "outDir": "dist/",
+    "outDir": "dist",
     "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
+      "es2020.promise"
     ]
   },
   "include": [
