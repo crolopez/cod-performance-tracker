@@ -1,26 +1,23 @@
-import nock from 'nock'
-import { getDetailedReport, getReport } from '../../../src/modules/trackerController/trackerController'
-import { REPORT_HEADER, DETAILED_REPORT_HEADER, HTML_REPORT, DETAILED_HTML_REPORT,
-  ERROR_HTML_REPORT, DETAILED_ERROR_HTML_REPORT } from '../data/trackerController.template'
-import { getFirstUserResponse , getSecondUserResponse } from '../data/trackerAPIResponse.template'
+import { when } from 'jest-when'
+import { getReport, getDetailedReport } from '../../../src/modules/trackerController/trackerController'
+import { getUserStatsMessage, getAllUserStatsMessage } from '../../../src/modules/trackerController/userStats'
+import { REPORT_HEADER, DETAILED_REPORT_HEADER } from '../data/trackerController.template'
 
-function mockTrackerAPI(user: string, response: any) {
-  nock('https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet')
-    .get(`/${user.replace('#', '%23')}`)
-    .reply(200, response)
-}
-
-function mockTrackerAPIWithError(user: string) {
-  nock('https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet')
-    .get(`/${user.replace('#', '%23')}`)
-    .replyWithError(':(')
-}
+jest.mock('../../../src/modules/trackerController/userStats', () => {
+  return {
+    getUserStatsMessage: jest.fn(),
+    getAllUserStatsMessage: jest.fn(),
+  }
+})
 
 describe('trackerController module', () => {
-  const testUsers = ['Zelopec#2548', 'SneezyDwarf#2155284']
+  const users = ['user1', 'user2']
+  const stats = ['user1\'s stats', 'user2\'s stats']
 
-  beforeEach(() => {
-    nock.disableNetConnect()
+  test('#getReport (without users)', async () => {
+    const result = await getReport([])
+
+    expect(result).toBe(REPORT_HEADER)
   })
 
   test('#getDetailedReport (without users)', async () => {
@@ -29,43 +26,51 @@ describe('trackerController module', () => {
     expect(result).toBe(DETAILED_REPORT_HEADER)
   })
 
-  test('#getReport (without users)', async () => {
-    const result = await getReport([])
+  test('#getReport (with several users)', async () => {
+    const expectedReport = `${REPORT_HEADER}\n${stats[0]}\n${stats[1]}`
+    when(getUserStatsMessage).calledWith(users[0])
+      .mockResolvedValue(stats[0])
+    when(getUserStatsMessage).calledWith(users[1])
+      .mockResolvedValue(stats[1])
 
-    expect(result).toBe(REPORT_HEADER)
+    const result = await getReport(users)
+
+    expect(result).toBe(expectedReport)
   })
 
   test('#getDetailedReport (with several users)', async () => {
-    mockTrackerAPI(testUsers[0], getFirstUserResponse())
-    mockTrackerAPI(testUsers[1], getSecondUserResponse())
+    const expectedReport = `${DETAILED_REPORT_HEADER}\n${stats[0]}\n${stats[1]}`
+    when(getAllUserStatsMessage).calledWith(users[0])
+      .mockResolvedValue(stats[0])
+    when(getAllUserStatsMessage).calledWith(users[1])
+      .mockResolvedValue(stats[1])
 
-    const result = await getDetailedReport(testUsers)
+    const result = await getDetailedReport(users)
 
-    expect(result).toBe(DETAILED_HTML_REPORT)
-  })
-
-  test('#getReport (with several users)', async () => {
-    mockTrackerAPI(testUsers[0], getFirstUserResponse())
-    mockTrackerAPI(testUsers[1], getSecondUserResponse())
-
-    const result = await getReport(testUsers)
-
-    expect(result).toBe(HTML_REPORT)
-  })
-
-  test('#getDetailedReport (with an invalid user)', async () => {
-    mockTrackerAPIWithError(testUsers[0])
-
-    const result = await getDetailedReport([testUsers[0]])
-
-    expect(result).toBe(DETAILED_ERROR_HTML_REPORT)
+    expect(result).toBe(expectedReport)
   })
 
   test('#getReport (with an invalid user)', async () => {
-    mockTrackerAPIWithError(testUsers[0])
+    const expectedReport = `${REPORT_HEADER}\n${stats[0]}\n${stats[1]}`
+    when(getUserStatsMessage).calledWith(users[0])
+      .mockRejectedValue(stats[0])
+    when(getUserStatsMessage).calledWith(users[1])
+      .mockRejectedValue(stats[1])
 
-    const result = await getReport([testUsers[0]])
+    const result = await getReport(users)
 
-    expect(result).toBe(ERROR_HTML_REPORT)
+    expect(result).toBe(expectedReport)
+  })
+
+  test('#getDetailedReport (with an invalid user)', async () => {
+    const expectedReport = `${DETAILED_REPORT_HEADER}\n${stats[0]}\n${stats[1]}`
+    when(getAllUserStatsMessage).calledWith(users[0])
+      .mockRejectedValue(stats[0])
+    when(getAllUserStatsMessage).calledWith(users[1])
+      .mockRejectedValue(stats[1])
+
+    const result = await getDetailedReport(users)
+
+    expect(result).toBe(expectedReport)
   })
 })

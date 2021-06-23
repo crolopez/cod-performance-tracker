@@ -23,9 +23,9 @@ module.exports = {
 
   // Coverage
   collectCoverageFrom: [
-    'src/**/*.{ts}',
-    'src/**/**/*.{ts}',
-    '!src/index.ts',
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/handler.ts',
+    '!<rootDir>/src/utils/messages.ts',
   ],
   coverageThreshold: {
     global: {
