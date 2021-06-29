@@ -1,6 +1,6 @@
 # COD PERFORMANCE TRACKER
 
-Telegram bot to report on your and your friends' performance in Call of Duty Cold War.
+Telegram bot to report on your and your friends performance in Call of Duty Cold War.
 
 ## How to deploy
 
@@ -29,6 +29,14 @@ Example:
 TELEGRAM_BOT_TOKEN=129238594:AAF5Safasfj899824781l8asdaszZ3
 USERS_TO_REPORT=Zelopec#232548,SneezyDwarf#2155284
 ```
+
+## Commands
+
+| Command | Description |
+|-|-|
+| `/report` | Create a simple report on the defined players. |
+| `/detailed_report` | Create a detailed report on the defined players. |
+| `/version` | Get the bot version. |
 
 ## Execute periodic reports
 
