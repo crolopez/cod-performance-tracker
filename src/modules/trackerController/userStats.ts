@@ -39,7 +39,7 @@ async function getUserStatsMessage(user: string): Promise<string> {
     return getHTMLFormatMessageFromUserStats(userStats, false)
   } catch (err) {
     console.log(`Error: ${err}`)
-    return `Could not get the information for ${user}`
+    return `Could not get the information for *${user}*`
   }
 }
 
@@ -49,7 +49,7 @@ async function getAllUserStatsMessage(user: string): Promise<string> {
     return getHTMLFormatMessageFromUserStats(userStats, true)
   } catch (err) {
     console.log(`Error: ${err}`)
-    return `Could not get the information for ${user}`
+    return `Could not get the information for *${user}*`
   }
 }
 

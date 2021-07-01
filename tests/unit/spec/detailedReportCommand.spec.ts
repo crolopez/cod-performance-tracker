@@ -2,14 +2,6 @@ import { detailedReportCommand } from '../../../src/modules/commands/detailedRep
 import { getDetailedReport } from '../../../src/modules/trackerController/trackerController'
 import { sendMessage } from '../../../src/modules/telegramController'
 
-jest.mock('../../../src/utils/config', () => {
-  return {
-    getConfig: jest.fn().mockReturnValue({
-      USERS_TO_REPORT: 'user1,user2,user3',
-    }),
-  }
-})
-
 jest.mock('../../../src/modules/trackerController/trackerController', () => {
   return {
     getDetailedReport: jest.fn().mockReturnValue('report message'),
@@ -24,15 +16,16 @@ jest.mock('../../../src/modules/telegramController', () => {
 
 describe('Detailed report command', () => {
   const chatId = 73
+  const commandArgs = [ '', '', 'User#1' ]
 
   test('Handler gets the report', async () => {
-    detailedReportCommand.handler(chatId)
+    detailedReportCommand.handler(chatId, commandArgs)
 
-    expect(getDetailedReport).toBeCalledWith('user1,user2,user3')
+    expect(getDetailedReport).toBeCalledWith(commandArgs[2])
   })
 
   test('Handler sends the report', async () => {
-    detailedReportCommand.handler(chatId)
+    detailedReportCommand.handler(chatId, commandArgs)
 
     expect(sendMessage).toBeCalledWith(chatId, 'report message')
   })

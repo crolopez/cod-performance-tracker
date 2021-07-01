@@ -9,6 +9,6 @@ export const DETAILED_HTML_STATS =
   '*Kills: *9906\n'
 
 export const ERROR_HTML_STATS =
-  'Could not get the information for Zelopec#2548'
+  'Could not get the information for *Zelopec#2548*'
 
 export const DETAILED_ERROR_HTML_STATS = ERROR_HTML_STATS

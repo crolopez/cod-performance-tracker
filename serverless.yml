@@ -11,7 +11,6 @@ provider:
   stage: dev
   environment:
     TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
-    USERS_TO_REPORT: ${env:USERS_TO_REPORT}
 
 package:
   individually: true

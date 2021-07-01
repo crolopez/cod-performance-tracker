@@ -1,5 +1,6 @@
 import type { Message } from 'telegram-typings'
 import { getCommandList } from './commandList'
+import { sendMessage } from '../telegramController'
 import { CommandResponse } from '../../types/CommandResponse'
 import { InvalidBodyRequest, InvalidCommandFormat,
   CommandNotRecognised } from '../../utils/messages'
@@ -33,5 +34,12 @@ export async function commandDispatcher(message: Message): Promise<CommandRespon
     return getCommandError(CommandNotRecognised)
   }
 
+  const validation = commandHandler.argsValidation(commandParsed)
+  if (validation !== 'ok') {
+    sendMessage(chat.id, `*${InvalidCommandFormat}:* \`${validation}\``)
+    return getCommandError(`${InvalidCommandFormat}: ${validation}`)
+  }
+
+  console.log(`Executing '${text}' from ${chat.id}`)
   return commandHandler.handler(chat.id, commandParsed)
 }

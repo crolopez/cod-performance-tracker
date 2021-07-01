@@ -2,8 +2,14 @@ import type { Message } from 'telegram-typings'
 import { commandDispatcher } from '../../../src/modules/commands/commandDispatcher'
 import { InvalidBodyRequest, InvalidCommandFormat, CommandNotRecognised }
   from '../../../src/utils/messages'
-// import { getCommandList } from '../../../src/modules/commands/commandList'
-// import { Command } from '../../../src/types/Command'
+
+jest.mock('../../../src/utils/config', () => {
+  return {
+    getConfig: jest.fn().mockReturnValue({
+      TELEGRAM_BOT_TOKEN: 'TEST:BOT-TOKEN',
+    }),
+  }
+})
 
 jest.mock('../../../src/modules/commands/commandList', () => {
   const handlerResponse = {
@@ -13,8 +19,8 @@ jest.mock('../../../src/modules/commands/commandList', () => {
   const fakeCommand = {
     command: 'fake_command',
     handler: jest.fn().mockReturnValue(handlerResponse),
+    argsValidation: jest.fn().mockReturnValue('ok'),
   }
-
   return {
     getCommandList: jest.fn().mockReturnValue([fakeCommand]),
   }
@@ -57,6 +63,15 @@ describe('Command dispatcher module', () => {
   })
 
   test('Command handler is called', async () => {
+    message.text = '/fake_command'
+
+    const result = await commandDispatcher(message)
+
+    expect(result.response).toEqual('Fake command response')
+    expect(result.success).toEqual(true)
+  })
+
+  test('Command validation fails', async () => {
     message.text = '/fake_command'
 
     const result = await commandDispatcher(message)

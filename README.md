@@ -21,21 +21,19 @@ To configure the tracker you have to create a `.env` file and add the following 
 | Field | Description |
 |-|-|
 | TELEGRAM_BOT_TOKEN | API token from your Telegram bot |
-| USERS_TO_REPORT | List of users to be analysed in the following format: `User1#111,User2#222` |
 
 Example:
 
 ``` bash
 TELEGRAM_BOT_TOKEN=129238594:AAF5Safasfj899824781l8asdaszZ3
-USERS_TO_REPORT=Zelopec#232548,SneezyDwarf#2155284
 ```
 
 ## Commands
 
 | Command | Description |
 |-|-|
-| `/report` | Create a simple report on the defined players. |
-| `/detailed_report` | Create a detailed report on the defined players. |
+| `/report <user>` | Create a simple report on the specified user. |
+| `/detailed_report <user>` | Create a detailed report on the specified user. |
 | `/version` | Get the bot version. |
 
 ## Execute periodic reports

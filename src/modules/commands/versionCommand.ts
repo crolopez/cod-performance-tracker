@@ -15,6 +15,7 @@ const sendVersion = async (chatId: number): Promise<CommandResponse> => {
 class VersionCommand implements Command {
   command = 'version'
   handler = sendVersion
+  argsValidation = () => { return 'ok' }
 }
 
 const versionCommand = new VersionCommand()

@@ -13,7 +13,7 @@ jest.mock('../../../src/modules/telegramController', () => {
   }
 })
 
-describe('Report command', () => {
+describe('Version command', () => {
   const chatId = 73
 
   test('Handler sends the version', async () => {
@@ -22,5 +22,11 @@ describe('Report command', () => {
     versionCommand.handler(chatId)
 
     expect(sendMessage).toBeCalledWith(chatId, expectedMessage)
+  })
+
+  test('argsValidation method returns ok', async () => {
+    const result = versionCommand.argsValidation()
+
+    expect(result).toBe('ok')
   })
 })

@@ -2,12 +2,11 @@ import { Command } from '../../types/Command'
 import { CommandResponse } from '../../types/CommandResponse'
 import { getReport } from '../trackerController/trackerController'
 import { sendMessage } from '../telegramController'
-import { getConfig } from '../../utils/config'
+import { reportValidation } from './validations'
 
-const users = getConfig().USERS_TO_REPORT
-
-const sendReport = async (chatId: number): Promise<CommandResponse> => {
-  const report = await getReport(users)
+const sendReport = async (chatId: number, args: string[]): Promise<CommandResponse> => {
+  const user = args[2]
+  const report = await getReport(user)
   const result = await sendMessage(chatId, report)
   return {
     response: result,
@@ -18,6 +17,7 @@ const sendReport = async (chatId: number): Promise<CommandResponse> => {
 class ReportCommand implements Command {
   command = 'report'
   handler = sendReport
+  argsValidation = reportValidation
 }
 
 const reportCommand = new ReportCommand()
