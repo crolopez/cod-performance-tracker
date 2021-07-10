@@ -5,7 +5,7 @@ import { CommandResponse } from '../../types/CommandResponse'
 import { InvalidBodyRequest, InvalidCommandFormat,
   CommandNotRecognised } from '../../utils/messages'
 
-const commandRegex = '/([^ ]+)[ ]*([^ ]*)[ ]*([^ ]*)'
+const commandRegex = '^/([^ ]+)[ ]*([^ ]*)[ ]*([^ ]*)'
 
 function getCommandError(message: string): CommandResponse {
   return {
