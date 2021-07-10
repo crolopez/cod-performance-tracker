@@ -1,6 +1,6 @@
 {
   "name": "cod-performance-tracker",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "GPL-3.0",
   "description": "",
   "repository": {
@@ -10,8 +10,7 @@
   "main": "dist/src/handler.js",
   "author": "Cristóbal López Peñalver",
   "scripts": {
-    "lint": "eslint --fix --ext .js,.ts src tests",
-    "lint:ci": "eslint --ext .js,.ts src tests",
+    "lint": "eslint . --ext .ts",
     "build": "rimraf ./dist && tsc",
     "start:local": "serverless offline",
     "deploy": "serverless deploy",

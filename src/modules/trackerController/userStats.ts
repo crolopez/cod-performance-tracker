@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getUserStatsFromApiResponse } from './parser'
 import { UserStats } from '../../types/UserStats'
 import { APIResponse } from '../../types/APIResponse'
+import { getConfig } from '../../utils/config'
 
 const trackerAPI = 'https://api.tracker.gg/api/v2/cold-war/standard/profile/battlenet/'
 const requestHeaders = {
@@ -20,7 +21,8 @@ async function requestUserData(user: string): Promise<APIResponse> {
 }
 
 async function getUserStats(user: string): Promise<UserStats> {
-  const rawUserData = await requestUserData(user)
+  const alias = getConfig().USER_ALIAS[user]
+  const rawUserData = await requestUserData(alias ?? user)
   return getUserStatsFromApiResponse(rawUserData)
 }
 

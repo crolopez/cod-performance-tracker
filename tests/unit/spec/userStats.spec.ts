@@ -17,10 +17,12 @@ function mockTrackerAPIWithError(user: string) {
 }
 
 describe('userStats module', () => {
-  const testUser = 'Zelopec#2548'
+  const testUser = 'fisherman#1691'
 
   beforeEach(() => {
     nock.disableNetConnect()
+    process.env.TELEGRAM_BOT_TOKEN = 'TEST:BOT-TOKEN'
+    delete process.env.USER_ALIAS
   })
 
   test('#getUserStatsMessage (with a valid user)', async () => {
@@ -53,5 +55,23 @@ describe('userStats module', () => {
     const result = await getAllUserStatsMessage(testUser)
 
     expect(result).toBe(DETAILED_ERROR_HTML_STATS)
+  })
+
+  test('#getUserStatsMessage (with an alias)', async () => {
+    mockTrackerAPI(testUser, getFirstUserResponse())
+    process.env.USER_ALIAS = 'roberto:fisherman#1691'
+
+    const result = await getUserStatsMessage('roberto')
+
+    expect(result).toBe(HTML_STATS)
+  })
+
+  test('#getAllUserStatsMessage (with an alias)', async () => {
+    mockTrackerAPI(testUser, getFirstUserResponse())
+    process.env.USER_ALIAS = 'roberto:fisherman#1691'
+
+    const result = await getAllUserStatsMessage('roberto')
+
+    expect(result).toBe(DETAILED_HTML_STATS)
   })
 })

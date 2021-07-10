@@ -21,11 +21,13 @@ To configure the tracker you have to create a `.env` file and add the following 
 | Field | Description |
 |-|-|
 | TELEGRAM_BOT_TOKEN | API token from your Telegram bot |
+| USER_ALIAS `(optional)` | Allows you to configure several aliases to avoid using the full user ID. Format `alias1=user1#ID1,alias2=user2#ID2` |
 
 Example:
 
 ``` bash
 TELEGRAM_BOT_TOKEN=129238594:AAF5Safasfj899824781l8asdaszZ3
+USER_ALIAS='alex=TableKiller#8789,roberto=fisherman#1691'
 ```
 
 ## Commands

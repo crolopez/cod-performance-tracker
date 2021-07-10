@@ -19,7 +19,7 @@ jobs:
           key: deps-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
       - run:
           name: Lint code
-          command: yarn lint:ci
+          command: yarn lint
       - run:
           name: Build
           command: yarn build

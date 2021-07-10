@@ -11,6 +11,7 @@ provider:
   stage: dev
   environment:
     TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
+    USER_ALIAS: ${env:USER_ALIAS}
 
 package:
   individually: true
